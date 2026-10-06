@@ -269,20 +269,6 @@ footer{padding:32px 0 56px;font-family:var(--mono);font-size:12px;color:var(--in
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <p class="eyebrow">For build</p>
-    <h2>Where the change sits</h2>
-    <ul class="plain">
-      <li><b>Routing from Home:</b> <code>TaskDrilldownScreen</code> decides whether a booking enters <code>BookingFlowContent</code>. Accepted, team-pending installs should always enter it, so they land on <code>BookingDateScreen</code>.</li>
-      <li><b>Back from the day screen:</b> <code>BookingDateScreen</code>'s ← and system back go to the Accepted card, not Home. This is in-screen state on the same drilldown route, not a new nav destination. Make sure system back isn't caught first by the route-level <code>BackHandler</code>.</li>
-      <li><b>Accepted card:</b> reuse <code>BookingFpnOverlay</code> with an accepted mode. It swaps the two CTAs, and in that mode the ✕ and system back close directly with no <code>BookingDismissSheet</code>.</li>
-      <li><b>Tertiary CTA:</b> <code>bookingVm.requestExit()</code>, the same call the day screen's <span class="hi">नहीं कर पाएँगे</span> makes.</li>
-      <li><b>No state writes:</b> none of the navigation above calls an API or changes the task state.</li>
-    </ul>
-  </div>
-</section>
-
 <footer>
   <div class="wrap">Current-state behaviour is read from <code>origin/master</code>, 6 Oct 2026.</div>
 </footer>

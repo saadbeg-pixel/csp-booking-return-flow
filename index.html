@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accepted Booking Return</title>
+<meta name="description" content="Spec: after a partner accepts a booking, re-entry goes to the installation-day screen, and back shows the booking card in an Accepted version with new CTAs.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ink:#171226; --ink-2:#57506b; --ink-3:#867ea0;
+  --ground:#faf9fc; --panel:#ffffff; --rule:#e5e1ee; --rule-2:#efecf5;
+  --brand:#d9008d; --brand-soft:#fff0f9;
+  --free:#008043; --free-soft:#e6f7ee;
+  --cost:#a8341c; --cost-soft:#fdece7;
+  --wait:#7a5b00; --wait-soft:#fff3cf;
+  --shot-bg:#ebe7f2;
+  --disp:"Bricolage Grotesque","Noto Sans",system-ui,sans-serif;
+  --body:"Noto Sans","Noto Sans Devanagari",system-ui,sans-serif;
+  --hi:"Noto Sans Devanagari","Noto Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#f0ecf7; --ink-2:#b4abc8; --ink-3:#8a81a3;
+  --ground:#141020; --panel:#1d1830; --rule:#332b47; --rule-2:#282139;
+  --brand:#ff5cc0; --brand-soft:#33132a;
+  --free:#4bd08c; --free-soft:#10301f;
+  --cost:#ff8f70; --cost-soft:#361b13;
+  --wait:#e8c766; --wait-soft:#332a10;
+  --shot-bg:#241e38;
+}}
+:root[data-theme="dark"]{
+  --ink:#f0ecf7; --ink-2:#b4abc8; --ink-3:#8a81a3;
+  --ground:#141020; --panel:#1d1830; --rule:#332b47; --rule-2:#282139;
+  --brand:#ff5cc0; --brand-soft:#33132a;
+  --free:#4bd08c; --free-soft:#10301f;
+  --cost:#ff8f70; --cost-soft:#361b13;
+  --wait:#e8c766; --wait-soft:#332a10;
+  --shot-bg:#241e38;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+@media (min-width:640px){.wrap{padding:0 24px}}
+h1,h2,h3{font-family:var(--disp);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,5vw,48px);font-weight:700;letter-spacing:-.025em}
+h2{font-size:26px;font-weight:700;letter-spacing:-.015em;margin:0 0 8px}
+h3{font-size:17px;font-weight:700;margin:28px 0 8px}
+p{margin:0 0 16px;max-width:68ch}
+.hi{font-family:var(--hi)}
+.lede{font-size:19px;color:var(--ink-2);max-width:62ch}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 10px}
+header{padding:56px 0 32px;border-bottom:1px solid var(--rule)}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.links a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink);
+  border:1px solid var(--rule);border-radius:8px;padding:9px 13px;background:var(--panel);
+  display:inline-flex;align-items:baseline;gap:7px}
+.links a:hover{border-color:var(--brand);color:var(--brand)}
+.links a span{color:var(--ink-3)}
+a:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.byline{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:18px}
+section{padding:40px 0;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.callout{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--brand);
+  border-radius:0 12px 12px 0;padding:14px 18px;margin:0 0 20px}
+.callout p:last-child{margin:0}
+ul.plain{margin:10px 0 18px;padding-left:20px}
+ul.plain li{font-size:15px;line-height:1.6;color:var(--ink-2);margin-bottom:8px;max-width:66ch}
+ul.plain li b{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--rule-2);padding:1px 5px;border-radius:4px;
+  overflow-wrap:anywhere}
+
+/* summary cards */
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0 0}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:16px 18px}
+.card .n{font-family:var(--mono);font-size:11px;color:var(--brand);letter-spacing:.1em;text-transform:uppercase}
+.card h3{margin:6px 0 6px;font-size:16px}
+.card p{font-size:14.5px;color:var(--ink-2);margin:0}
+
+/* screenshots */
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:22px 0 8px}
+figure{margin:0;background:var(--shot-bg);border-radius:16px;padding:16px;display:flex;flex-direction:column;align-items:center}
+figure img{display:block;max-width:100%;height:auto;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+figcaption{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);margin-top:12px;text-align:center;letter-spacing:.02em}
+figcaption b{color:var(--ink);font-weight:500}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:4px;margin-right:6px;vertical-align:1px}
+.tag.old{background:var(--rule-2);color:var(--ink-3)}
+.tag.new{background:var(--brand-soft);color:var(--brand)}
+.tag.same{background:var(--free-soft);color:var(--free)}
+
+/* tables */
+.tbl{overflow-x:auto;margin:16px 0 20px;border:1px solid var(--rule);border-radius:12px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:var(--ground)}
+td.num{font-family:var(--mono);white-space:nowrap}
+td .was{color:var(--ink-3);text-decoration:line-through}
+td .now{color:var(--brand);font-weight:600}
+td.hi, td .hi{font-family:var(--hi)}
+
+/* flow */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0 6px;font-size:14px}
+.flow .step{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:8px 12px}
+.flow .step.b{border-color:var(--brand);color:var(--brand)}
+.flow .arr{color:var(--ink-3);font-family:var(--mono)}
+.branch{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:12px 0 0}
+
+footer{padding:32px 0 56px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+</style>
+<style>
+.flowcard{background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;margin:18px 0}
+.flowcard h3{margin:0 0 4px}
+.flowcard .sub{font-size:14px;color:var(--ink-3);margin:0 0 6px}
+.flowcard .flow{margin:10px 0 0}
+.pill{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:5px;background:var(--free-soft);color:var(--free);vertical-align:2px;margin-left:6px}
+.crit{color:#d92130;font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .crit{color:#ff7a85}}
+:root[data-theme="dark"] .crit{color:#ff7a85}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">Partner App · Booking flow · Design update</p>
+    <h1>Coming back to an accepted booking</h1>
+    <p class="lede" style="margin-top:16px">Once a partner has accepted a booking, every way back into it leads to the same place: the installation-day screen. Going back from that screen shows the booking card in an <b>Accepted</b> version, with new CTAs. Nothing in this flow undoes the acceptance.</p>
+    <div class="links">
+      <a href="https://saadbeg-pixel.github.io/csp-booking-brief/" target="_blank" rel="noopener">Parent brief <span>New Connection Journey</span></a>
+      <a href="https://saadbeg-pixel.github.io/csp-address-audio-update/" target="_blank" rel="noopener">Related spec <span>Address audio update</span></a>
+    </div>
+    <p class="byline">Saad Beg · Design · 6 Oct 2026 · v1</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">At a glance</p>
+    <h2>What changes</h2>
+    <div class="three">
+      <div class="card"><div class="n">01 · Re-entry</div><h3>Card tap opens the day screen</h3><p>If the partner leaves the installation-day screen and later taps the booking on Home, the same day screen opens.</p></div>
+      <div class="card"><div class="n">02 · Back</div><h3>Back shows the Accepted card</h3><p>Back from the day screen opens the booking card in its Accepted version. The booking stays accepted.</p></div>
+      <div class="card"><div class="n">03 · CTAs</div><h3>New CTAs on the card</h3><p><span class="hi">इंस्टालेशन का दिन देखें</span> and <span class="hi crit">कनेक्शन नहीं लगा सकता</span> replace accept/decline. The ✕ closes without a sheet.</p></div>
+    </div>
+
+    <div class="shots">
+      <figure><img src="img/card-pending.png" width="360" height="720" alt="Booking card before acceptance with CTAs 'यह कनेक्शन लगा सकता हूँ' and 'नहीं लगा सकता'."><figcaption><span class="tag old">Before accept</span><b>Unchanged</b></figcaption></figure>
+      <figure><img src="img/card-accepted.png" width="360" height="720" alt="Booking card in Accepted version with CTAs 'इंस्टालेशन का दिन देखें →' and red 'कनेक्शन नहीं लगा सकता'."><figcaption><span class="tag new">Accepted</span><b>New version</b></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Flows</p>
+    <h2>The two journeys</h2>
+
+    <div class="flowcard">
+      <h3>Flow 1 · Leave the day screen, come back from Home</h3>
+      <div class="flow">
+        <span class="step">Booking accepted</span><span class="arr">→</span>
+        <span class="step">Day screen</span><span class="arr">→</span>
+        <span class="step">Partner leaves (✕ / back / app closed)</span><span class="arr">→</span>
+        <span class="step">Home</span><span class="arr">→</span>
+        <span class="step">Taps the same booking card</span><span class="arr">→</span>
+        <span class="step b">Same day screen</span>
+      </div>
+    </div>
+
+    <div class="shots">
+      <figure><img src="img/date-screen.png" width="360" height="720" alt="Installation day screen: 'किस दिन लगाना है?', '18 जुलाई (शनिवार)', 'इस दिन कनेक्शन लगाना ही है', 'दिन बदलें', customer row, CTA 'टीम को भेजें'."><figcaption><span class="tag same">Existing</span><b>Day screen</b></figcaption></figure>
+      <figure><img src="img/home-feed.png" width="360" height="800" alt="Home feed with booking card 'इंस्टॉल · राहुल शर्मा', 'टीम चुनना बाक़ी है'."><figcaption><span class="tag same">Existing</span><b>Home · card “टीम चुनना बाक़ी है”</b></figcaption></figure>
+    </div>
+
+    <div class="flowcard">
+      <h3>Flow 2 · Back from the day screen</h3>
+      <div class="flow">
+        <span class="step">Day screen</span><span class="arr">→ ←</span>
+        <span class="step b">Booking card · Accepted version</span>
+      </div>
+      <p class="sub" style="margin-top:12px">From the Accepted card, there are three ways out:</p>
+      <div class="branch">
+        <div class="card"><div class="n">Primary CTA</div><h3 class="hi">इंस्टालेशन का दिन देखें →</h3><p>Opens the day screen again.</p></div>
+        <div class="card"><div class="n">Tertiary CTA</div><h3 class="hi crit">कनेक्शन नहीं लगा सकता</h3><p>Starts the <b>post-acceptance cancel flow, same as today</b>: day-change offer → still cancel → rejection reasons → each reason's own flow.</p></div>
+        <div class="card"><div class="n">✕ close</div><h3>Close directly</h3><p>No bottom sheet. Return to where the partner came from (Home, in the normal case).</p></div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><b>The state does not change.</b> Going back from the day screen is just navigation. It makes no API call, the booking stays <b>Accepted</b> (<code>AWAITING_TECHNICIAN_ASSIGNMENT</code>, <code>acceptanceReceived = true</code>), and the partner never sees the accept/decline CTAs for it again.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Screen</p>
+    <h2>Booking card · Accepted version</h2>
+    <p>The card itself (map, ₹750 banner, landmark, address, audio, <span class="hi">पता नहीं समझ आया ?</span>) is <b>identical</b> to the version before acceptance. Only the bottom CTA bar and the ✕ behave differently.</p>
+
+    <h3>When to show it</h3>
+    <ul class="plain">
+      <li>Show it <b>only</b> when the partner presses back on the day screen and the booking is accepted with no team assigned yet (<code>acceptanceReceived = true</code>, <code>executor = null</code>).</li>
+      <li>Tapping the booking card on Home never opens this version. That always opens the day screen (Flow 1).</li>
+    </ul>
+
+    <h3>CTA bar</h3>
+    <div class="tbl"><table>
+      <tr><th>Element</th><th>Before accept</th><th>Accepted version</th></tr>
+      <tr><td>Primary CTA</td><td class="hi">यह कनेक्शन लगा सकता हूँ</td><td><span class="hi">इंस्टालेशन का दिन देखें</span> + <b>20dp → trailing icon</b> · <code>bg/brand #D9008D</code>, label <code>type/label/lg</code> 16/24 SemiBold, <code>text/onbrand</code> · 48dp · radius 16</td></tr>
+      <tr><td>Tertiary CTA</td><td class="hi">नहीं लगा सकता <span style="color:var(--ink-3)">(brand pink)</span></td><td><span class="hi crit">कनेक्शन नहीं लगा सकता</span> · <b><code>text/critical #D92130</code></b> · <code>type/label/lg</code> · padding 16 H / 8 V (40dp tall)</td></tr>
+      <tr><td>Bar</td><td colspan="2">Same as before accept: bg <code>bg/default</code>, 1dp top border <code>stroke/default</code>, padding 16 top / 24 bottom / 16 sides, 8dp between the CTAs</td></tr>
+    </table></div>
+
+    <h3>Close (✕) and system back</h3>
+    <div class="tbl"><table>
+      <tr><th></th><th>Before accept</th><th>Accepted version</th></tr>
+      <tr><td>✕</td><td>Opens the dismiss sheet (<span class="hi">यह कनेक्शन अभी नहीं देखना?</span> · “कनेक्शन 4 घंटे तक आपके पास रहेगा…”)</td><td><b>Closes directly.</b> No sheet, no 4-hour warning, because the booking is already accepted. Goes back to the origin.</td></tr>
+      <tr><td>System back</td><td>Same as ✕</td><td>Same as ✕: closes directly to the origin</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Behaviour</p>
+    <h2>Today vs new</h2>
+    <p>The current behaviour comes from the live code.</p>
+    <div class="tbl"><table>
+      <tr><th>Moment</th><th>Today</th><th>New</th></tr>
+      <tr><td>Tap an accepted, team-pending booking on Home</td><td>The day screen opens only when the booking-decision flag is on <b>and</b> the booking is customer-scheduled. Otherwise it opens the old install drilldown.</td><td><span class="now">Always the day screen</span></td></tr>
+      <tr><td>Day screen · ← back arrow</td><td>Back to Home</td><td><span class="now">Booking card · Accepted version</span></td></tr>
+      <tr><td>Day screen · system back</td><td>Back to Home</td><td><span class="now">Booking card · Accepted version</span> (same as ←)</td></tr>
+      <tr><td>Day screen · ✕</td><td>Back to Home (rollout cohort: dismiss sheet)</td><td>Unchanged</td></tr>
+      <tr><td>Booking card after accept</td><td>Never shown again</td><td><span class="now">Shown in its Accepted version</span>, reached from the day screen's back</td></tr>
+      <tr><td>✕ on the booking card</td><td>Dismiss sheet with the 4-hour message</td><td>Before accept: unchanged · Accepted: <span class="now">closes directly</span></td></tr>
+      <tr><td>Cancel after accept</td><td><span class="hi">नहीं कर पाएँगे</span> on the day screen → post-acceptance cancel flow</td><td>Unchanged, and also reachable from <span class="hi crit">कनेक्शन नहीं लगा सकता</span> on the Accepted card (same flow)</td></tr>
+      <tr><td>After a team is assigned</td><td>Card opens the acknowledgement screen</td><td>Unchanged. The Accepted card is only for the stage where no team is assigned yet.</td></tr>
+    </table></div>
+
+    <h3>Post-acceptance cancel flow (reused as is)</h3>
+    <p>The tertiary CTA calls the same entry point as <span class="hi">नहीं कर पाएँगे</span> on the day screen (<code>BookingViewModel.requestExit()</code>), so both cohorts behave exactly as they do today:</p>
+    <ul class="plain">
+      <li><b>Rollout:</b> <span class="hi">यह काम छोड़ रहे हैं?</span> (day-change nudge) → <span class="hi">फिर भी छोड़ना है</span> → rejection reasons → each reason's own flow.</li>
+      <li><b>Legacy:</b> free date-change reminder (if changes are left) → quality warning → exit reasons.</li>
+      <li>Picking “change day” at the nudge opens the day-change flow, just like from the day screen.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Strings</p>
+    <h2>Copy</h2>
+    <p>New keys for <code>booking_labels_hi_en.json</code>. The key names are suggestions.</p>
+    <div class="tbl"><table>
+      <tr><th>Key</th><th>Hindi</th><th>English</th></tr>
+      <tr><td><code>booking.accepted.view_day_cta</code></td><td class="hi">इंस्टालेशन का दिन देखें</td><td>See installation day</td></tr>
+      <tr><td><code>booking.accepted.cant_install_cta</code></td><td class="hi">कनेक्शन नहीं लगा सकता</td><td>Can't install this connection</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">For build</p>
+    <h2>Where the change sits</h2>
+    <ul class="plain">
+      <li><b>Routing from Home:</b> <code>TaskDrilldownScreen</code> decides whether a booking enters <code>BookingFlowContent</code>. Accepted, team-pending installs should always enter it, so they land on <code>BookingDateScreen</code>.</li>
+      <li><b>Back from the day screen:</b> <code>BookingDateScreen</code>'s ← and system back go to the Accepted card, not Home. This is in-screen state on the same drilldown route, not a new nav destination. Make sure system back isn't caught first by the route-level <code>BackHandler</code>.</li>
+      <li><b>Accepted card:</b> reuse <code>BookingFpnOverlay</code> with an accepted mode. It swaps the two CTAs, and in that mode the ✕ and system back close directly with no <code>BookingDismissSheet</code>.</li>
+      <li><b>Tertiary CTA:</b> <code>bookingVm.requestExit()</code>, the same call the day screen's <span class="hi">नहीं कर पाएँगे</span> makes.</li>
+      <li><b>No state writes:</b> none of the navigation above calls an API or changes the task state.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Current-state behaviour is read from <code>origin/master</code>, 6 Oct 2026.</div>
+</footer>
+
+</body>
+</html>
